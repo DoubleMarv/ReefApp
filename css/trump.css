@@ -1,0 +1,56 @@
+
+
+body {
+    padding-top: 70px; 
+}
+
+.portfolio-item {
+    margin-bottom: 25px;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.trumphead{
+	position: relative;
+}
+
+.trumphair{
+	position: absolute;
+    top: -20%;
+    left: -2%;
+}
+.trumpbrows{
+    position: absolute; top: 30%;transition: all .2s ease;}
+.trumptoplip{
+    position: absolute;
+    top: 61%;
+    left: 1.2%;
+transition: all .2s ease-in-out;}
+.trumpbottomlip{position: absolute; top: 65%;left: 1%;transition: all .2s ease-in-out;}
+
+
+
+
+
+
+/** speechclasses ***/
+
+.browsup{
+	margin-top: -1em !important;
+}
+
+.lipopen{
+    transform: rotate(-30deg);
+    margin-top: 8px;
+    transform-origin: top;
+    transition: all .2s ease-in-out;
+}
+
+.toplipup{
+    transform: rotate(-5deg);
+    margin-top: -8px;
+    transform-origin: top;
+    transition: all .2s ease-in-out;
+}

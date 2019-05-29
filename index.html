@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Empty</title>
+<!-- Get minor updates and patch fixes within a major version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/reef@3/dist/reef.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+</head>
+
+<body>
+<div id="login">
+</div>
+
+<div id="login">
+</div>
+
+<div id="loggedin">
+</div>
+
+<div id="todos">
+</div>
+</body>
+
+
+<script>
+//database
+var db = new PouchDB('my_database');
+var hotdeebee = null;
+
+function addTodo(text) {
+  var todo = {
+    _id: new Date().toISOString(),
+    title: text,
+    completed: false
+  };
+  db.put(todo, function callback(err, result) {
+    if (!err) {
+      console.log('Successfully');
+    }
+  });
+}
+
+addTodo('bollock');
+
+function showTodos() {
+  db.allDocs({include_docs: true, descending: true}, function(err, doc) {
+    // redrawTodosUI(doc.rows);
+    hotdeebee = doc.rows;
+    logList();
+  });
+};
+
+
+//start reef
+var loginblock = document.getElementById('login');
+var applogin = new Reef('#login', {
+  data: {
+    greeting: 'Hello',
+    name: 'world'
+  },
+  template: function (props) {
+    return '<div class="columns is-centered"><div class="column is-one-third"><h1>' + props.greeting + ', ' + props.name + '!</h1></div><div class="column is-one-third"><input type="text" id="inputfield"/></div><div class="column is-one-third"><a id="loginbutton" onclick="login();">Login</a></div></div>';
+  }
+});
+
+var apploggedin = new Reef('#loggedin', {
+  data: {
+    greeting: 'Youre logged in',
+    name: ''
+  },
+    template: function (props) {
+    return '<div class="columns is-centered"><div class="column is-one-third"><h1>' + props.greeting + ', ' + props.name + '!</h1></div><div class="column is-one-third"><input type="text" id="inputfield"/></div><div class="column is-one-third"><a id="loginbutton" onclick="login();">Login</a></div></div>';
+  }
+});
+function logList() {
+
+var listtodos = new Reef('#todos', {
+  data: {
+    todos: hotdeebee,
+  },
+  template: function (props) {
+    var html = '<h2>Todo List</h2><ul>';
+    props.todos.forEach(function (todo) {
+      html += '<li>' + todo.doc.title + '</li>';
+    });
+    html += '</ul>';
+    return html;
+  },
+});
+listtodos.render();
+
+};
+
+
+var login = function(){
+  var username = document.getElementById('inputfield').value;
+  apploggedin.data.name = username;
+  loginblock.style.display = 'none';
+  apploggedin.render();
+};
+
+
+
+
+
+applogin.render();
+  // listtodos.render();
+  showTodos();
+</script>
+</html>
